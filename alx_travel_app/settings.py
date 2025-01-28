@@ -26,9 +26,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # 3rd_party_apps,
     'corsheaders',  # For handling CORS
     'rest_framework',  # For building APIs
     'drf_yasg',  # For API documentation
+
+    # Local_apps
     'listings',  # Your app
 ]
 
@@ -78,9 +82,16 @@ SWAGGER_SETTINGS = {
     'DEFAULT_MODEL_RENDERER': 'rest_framework.renderers.BrowsableAPIRenderer',
 }
 
-# Celery settings for asynchronous task queue (for future use)
-CELERY_BROKER_URL = 'amqp://localhost'  # RabbitMQ URL
-CELERY_RESULT_BACKEND = 'rpc://'  # Using RPC as backend for task results
+# Celery Configurations
+CELERY_BROKER_URL = 'amqp://alx_user:strongpassword@localhost:5672/alx_vhost'  # RabbitMQ broker URL
+CELERY_ACCEPT_CONTENT = ['json']  # Accepted content types
+CELERY_TASK_SERIALIZER = 'json'  # Serialization format
+
+# Optional: Track task results in Django's database
+INSTALLED_APPS += ['django_celery_results']
+CELERY_RESULT_BACKEND = 'django-db'
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
+
 
 # Logging configuration (optional, useful for debugging)
 LOGGING = {

@@ -84,4 +84,32 @@ Use a tool like [Postman](https://www.postman.com/) or [curl](https://curl.se/) 
 - **Listings**: `/api/listings/`
 - **Bookings**: `/api/bookings/`
 
+## Other installations i made
+- sudo apt-get install rabbitmq-server
+- sudo systemctl enable rabbitmq-server
+- sudo systemctl start rabbitmq-server
 
+####  Install Required Libraries
+- pip install celery
+- pip install django-celery-results  **For tracking task results**
+- pip install kombu  **Celery’s AMQP messaging library (used for RabbitMQ)**
+
+## Configure RabbitMQ
+#### Create a Virtual Host: This isolates tasks for your project.
+ ``` 
+   sudo rabbitmqctl add_vhost alx_vhost
+```
+
+### Add a User: Add a user for Celery to communicate with RabbitMQ.
+```
+   sudo rabbitmqctl add_user alx_user strongpassword
+```
+### Set Permissions: Grant the user permissions for the virtual host.
+```
+   sudo rabbitmqctl set_permissions -p alx_vhost alx_user ".*" ".*" ".*"
+```
+### Enable RabbitMQ Management Plugin
+For easier management, enable the RabbitMQ Management UI:
+```
+   sudo rabbitmq-plugins enable rabbitmq_management
+```
